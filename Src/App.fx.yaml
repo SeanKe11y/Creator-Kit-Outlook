@@ -1,0 +1,46 @@
+App As appinfo:
+    BackEnabled: =false
+    Formulas: |-
+        =selectedEmailCount = CountRows(ccMessageFluentDetailsList.SelectedItems);
+        emailSelected = If(CountRows(ccMessageFluentDetailsList.SelectedItems)>0, true, false);
+    OnStart: |
+        =Set(
+            AppTheme,
+            { palette: { themePrimary: "#0078d4", themeLighterAlt: "#eff6fc", themeLighter: "#deecf9", themeLight: "#c7e0f4", themeTertiary: "#71afe5", themeSecondary: "#2b88d8", themeDarkAlt: "#106ebe", themeDark: "#005a9e", themeDarker: "#004578", neutralLighterAlt: "#faf9f8", neutralLighter: "#f3f2f1", neutralLight: "#edebe9", neutralQuaternaryAlt: "#e1dfdd", neutralQuaternary: "#d0d0d0", neutralTertiaryAlt: "#c8c6c4", neutralTertiary: "#a19f9d", neutralSecondary: "#605e5c", neutralPrimaryAlt: "#3b3a39", neutralPrimary: "#323130", neutralDark: "#201f1e", black: "#000000", white: "#C5D3EB"}}
+        );
+        
+        Set(
+            AppThemeJson,
+            JSON(
+                AppTheme,
+                JSONFormat.IndentFour
+            )
+        );
+        
+        Set(
+            HeaderTheme,
+            { palette: { themePrimary: "#ffffff", themeLighterAlt: "#767676", themeLighter: "#a6a6a6", themeLight: "#c8c8c8", themeTertiary: "#d0d0d0", themeSecondary: "#dadada", themeDarkAlt: "#eaeaea", themeDark: "#f4f4f4", themeDarker: "#f8f8f8", neutralLighterAlt: "#0071c2", neutralLighter: "#1F3B5E", neutralLight: "#006bb7", neutralQuaternaryAlt: "#0063aa", neutralQuaternary: "#005fa2", neutralTertiaryAlt: "#005b9c", neutralTertiary: "#c8c8c8", neutralSecondary: "#d0d0d0", neutralPrimaryAlt: "#dadada", neutralPrimary: "#ffffff", neutralDark: "#f4f4f4", black: "#f8f8f8", white: "#0072C6"}}
+        );
+        
+        Set(
+            HeaderThemeJson,
+            JSON(
+                HeaderTheme,
+                JSONFormat.IndentFour
+            )
+        );
+        
+        Set(
+            SearchTheme,
+            { palette: { themePrimary: "#00000000", themeLighterAlt: "#eff6fc", themeLighter: "#deecf9", themeLight: "#c7e0f4", themeTertiary: "#71afe5", themeSecondary: "#2b88d8", themeDarkAlt: "#106ebe", themeDark: "#005a9e", themeDarker: "#004578", neutralLighterAlt: "#faf9f8", neutralLighter: "#f3f2f1", neutralLight: "#edebe9", neutralQuaternaryAlt: "#e1dfdd", neutralQuaternary: "#d0d0d0", neutralTertiaryAlt: "#c8c6c4", neutralTertiary: "#a19f9d", neutralSecondary: "#00000000", neutralPrimaryAlt: "#00000000", neutralPrimary: "#00000000", neutralDark: "#00000000", black: "#00000000", white: "#C5D3EB"}}
+        );
+        
+        Set(
+            SearchThemeJson,
+            JSON(
+                SearchTheme,
+                JSONFormat.IndentFour
+            )
+        );
+    StartScreen: =
+

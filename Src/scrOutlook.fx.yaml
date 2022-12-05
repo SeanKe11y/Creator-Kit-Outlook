@@ -1,0 +1,1473 @@
+scrOutlook As screen:
+    Fill: =RGBA(250, 250, 250, 1)
+    LoadingSpinnerColor: =RGBA(0, 120, 212, 1)
+    OnVisible: |-
+        =Set(varPageLoaded,false);
+        ClearCollect(colEmailInbox,Office365Outlook.GetEmails({top:25}));
+        Set(varToggleLeftPane, true);
+        Set(varPageLoaded,true);
+
+    conRoot As groupContainer.verticalAutoLayoutContainer:
+        Height: =App.Height
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutMode: =LayoutMode.Auto
+        Visible: =varPageLoaded
+        Width: =App.Width
+        ZIndex: =1
+
+        conHeader As groupContainer.manualLayoutContainer:
+            Fill: =RGBA(0, 114, 198, 1)
+            FillPortions: =0
+            Height: =50
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            ZIndex: =1
+
+            "ccHeaderCommandBar As 'Fluent Command Bar (1.0.14)'.pcfdataset":
+                DisplayMode: =DisplayMode.Edit
+                Height: =Parent.Height
+                ItemIconColor: =""
+                Items: |-
+                    =Table(
+                        {
+                            ItemKey: "applauncher",
+                            ItemDisplayName: "App launcher",
+                            ItemIconName: "WaffleOffice365",
+                            ItemIconColor: "White",
+                            ItemIconOnly: true
+                        },
+                        {
+                            ItemKey: "teamscall",
+                            ItemDisplayName: "Teams call",
+                            ItemIconName: "Video",
+                            ItemIconColor: "White",
+                            ItemFarItem: true
+                        },
+                        {
+                            ItemKey: "chat",
+                            ItemDisplayName: "Chat",
+                            ItemIconName: "OfficeChat",
+                            ItemIconColor: "White",
+                            ItemIconOnly: true,
+                            ItemFarItem: true
+                        },{
+                            ItemKey: "onenote",
+                            ItemDisplayName: "OneNote feed",
+                            ItemIconName: "OneNoteLogo",
+                            ItemIconColor: "White",
+                            ItemIconOnly: true,
+                            ItemFarItem: true
+                        },{
+                            ItemKey: "myday",
+                            ItemDisplayName: "My Day",
+                            ItemIconName: "PrimaryCalendar",
+                            ItemIconColor: "White",
+                            ItemIconOnly: true,
+                            ItemFarItem: true
+                        },{
+                            ItemKey: "notifications",
+                            ItemDisplayName: "Notifications",
+                            ItemIconName: "Shield", //Alert
+                            ItemIconColor: "White",
+                            ItemIconOnly: true,
+                            ItemFarItem: true
+                        },{
+                            ItemKey: "settings",
+                            ItemDisplayName: "Settings",
+                            ItemIconName: "Settings",
+                            ItemIconColor: "White",
+                            ItemIconOnly: true,
+                            ItemFarItem: true
+                        },{
+                            ItemKey: "whatsnew",
+                            ItemDisplayName: "What's new",
+                            ItemIconName: "Lightbulb",
+                            ItemIconColor: "White",
+                            ItemIconOnly: true,
+                            ItemFarItem: true
+                        }
+                    )
+                Theme: =HeaderThemeJson
+                Width: =Parent.Width-45
+                X: =0
+                Y: =0
+                ZIndex: =1
+
+            lblOutlook As label:
+                BorderColor: =RGBA(0, 0, 0, 0)
+                BorderStyle: =BorderStyle.None
+                BorderThickness: =2
+                Color: =RGBA(255, 255, 255, 1)
+                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FocusedBorderThickness: =4
+                Font: =Font.'Segoe UI'
+                FontWeight: =FontWeight.Semibold
+                Height: =48
+                Size: =13
+                Text: ="Outlook"
+                X: =52
+                Y: =2
+                ZIndex: =2
+
+            "ccProfilePersona As 'Fluent Persona (1.0.14) Preview'":
+                DisplayMode: =DisplayMode.Edit
+                Height: =40
+                HidePersonaDetails: =true
+                ImageUrl: =User().Image
+                PersonaSize: ='''PowerCAT.Persona.PersonaSize'''.Size40
+                Presence: ='''PowerCAT.Persona.Presence'''.None
+                SecondaryText: =
+                Text: =User().FullName
+                Theme: =HeaderThemeJson
+                Width: =40
+                X: =conHeader.Width-Self.Width-5
+                Y: =5
+                ZIndex: =3
+
+        conMain As groupContainer.horizontalAutoLayoutContainer:
+            Fill: =RGBA(250, 250, 250, 1)
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =2
+
+            conLeftRail As groupContainer.manualLayoutContainer:
+                Fill: =RGBA(240, 240, 240, 1)
+                FillPortions: =0
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                Width: =50
+                ZIndex: =1
+
+                "ccIconMoreApps As 'Fluent Icon (1.0.14)'":
+                    DisplayMode: =DisplayMode.Edit
+                    Height: =50
+                    IconName: ="More"
+                    TextAlignment: ='''PowerCAT.Icon.TextAlignment'''.Center
+                    Width: =50
+                    X: =0
+                    Y: =350
+                    ZIndex: =1
+
+                "ccIconOneDrive As 'Fluent Icon (1.0.14)'":
+                    DisplayMode: =DisplayMode.Edit
+                    Height: =50
+                    IconName: ="OneDriveLogo"
+                    TextAlignment: ='''PowerCAT.Icon.TextAlignment'''.Center
+                    Width: =50
+                    X: =0
+                    Y: =300
+                    ZIndex: =2
+
+                "ccIconYammer As 'Fluent Icon (1.0.14)'":
+                    DisplayMode: =DisplayMode.Edit
+                    Height: =50
+                    IconName: ="YammerLogo"
+                    TextAlignment: ='''PowerCAT.Icon.TextAlignment'''.Center
+                    Width: =50
+                    X: =0
+                    Y: =250
+                    ZIndex: =3
+
+                "ccIconToDo As 'Fluent Icon (1.0.14)'":
+                    DisplayMode: =DisplayMode.Edit
+                    Height: =50
+                    IconName: ="ToDoLogoOutline"
+                    TextAlignment: ='''PowerCAT.Icon.TextAlignment'''.Center
+                    Width: =50
+                    X: =0
+                    Y: =200
+                    ZIndex: =4
+
+                "ccIconFIles As 'Fluent Icon (1.0.14)'":
+                    DisplayMode: =DisplayMode.Edit
+                    Height: =50
+                    IconName: ="Attach"
+                    TextAlignment: ='''PowerCAT.Icon.TextAlignment'''.Center
+                    Width: =50
+                    X: =0
+                    Y: =150
+                    ZIndex: =5
+
+                "ccIconPeople As 'Fluent Icon (1.0.14)'":
+                    DisplayMode: =DisplayMode.Edit
+                    Height: =50
+                    IconName: ="People"
+                    TextAlignment: ='''PowerCAT.Icon.TextAlignment'''.Center
+                    Width: =50
+                    X: =0
+                    Y: =100
+                    ZIndex: =6
+
+                "ccIconCalendar As 'Fluent Icon (1.0.14)'":
+                    DisplayMode: =DisplayMode.Edit
+                    Height: =50
+                    IconName: ="Calendar"
+                    TextAlignment: ='''PowerCAT.Icon.TextAlignment'''.Center
+                    Width: =50
+                    X: =0
+                    Y: =50
+                    ZIndex: =7
+
+                "ccIconMail As 'Fluent Icon (1.0.14)'":
+                    AccessibilityLabel: ="Mail"
+                    DisplayMode: =DisplayMode.Edit
+                    Height: =50
+                    IconName: ="Mail"
+                    Text: =""
+                    TextAlignment: ='''PowerCAT.Icon.TextAlignment'''.Center
+                    Tooltip: ="Mail"
+                    Width: =50
+                    X: =0
+                    Y: =0
+                    ZIndex: =8
+
+            conApp As groupContainer.horizontalAutoLayoutContainer:
+                Fill: =RGBA(250, 250, 250, 1)
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutMinHeight: =100
+                LayoutMinWidth: =250
+                LayoutMode: =LayoutMode.Auto
+                ZIndex: =3
+
+                "ccMenuPivot As 'Fluent Pivot (1.0.14)'.pcfdataset":
+                    DisplayMode: =DisplayMode.Edit
+                    Height: =45
+                    Items: |-
+                        =Table(
+                          {
+                              ItemKey: "tabHome",
+                              ItemDisplayName: "Home"
+                          },
+                          {
+                              ItemKey: "tabView",
+                              ItemDisplayName: "View"
+                          },
+                          {
+                              ItemKey: "tabHelp",
+                              ItemDisplayName: "Help"
+                          }
+                        )
+                    LayoutMinHeight: =200
+                    LayoutMinWidth: =200
+                    Width: =Parent.Width
+                    X: =0
+                    Y: =0
+                    ZIndex: =1
+
+                conRibbon As groupContainer.manualLayoutContainer:
+                    AlignInContainer: =AlignInContainer.SetByContainer
+                    FillPortions: =0
+                    Height: =45
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    Width: =Parent.Width
+                    ZIndex: =2
+
+                    "ccRibblonElevation As 'Fluent Elevation (1.0.14)'":
+                        Depth: ='''PowerCAT.Elevation.Depth'''.Depth4
+                        DisplayMode: =DisplayMode.Edit
+                        Height: =Parent.Height
+                        HoverDepth: ='''PowerCAT.Elevation.HoverDepth'''.Depth4
+                        PaddingBottom: =2
+                        PaddingLeft: =10
+                        PaddingRight: =10
+                        PaddingTop: =2
+                        Width: =Parent.Width
+                        X: =0
+                        Y: =0
+                        ZIndex: =1
+
+                    "ccRibbonCommandBar As 'Fluent Command Bar (1.0.14)'.pcfdataset":
+                        DisplayMode: =DisplayMode.Edit
+                        Height: =35
+                        Items: |-
+                            =Table(
+                                {
+                                    ItemKey: "toggle",
+                                    ItemDisplayName: "Toggle left pane",
+                                    ItemIconName: "CollapseMenu",
+                                    ItemIconOnly: true,
+                                    ItemTopDivider: true
+                                },
+                                {
+                                    ItemKey: "newmail",
+                                    ItemDisplayName: "New mail",
+                                    ItemIconName: "Mail",
+                                    ItemSplit: true
+                                },
+                                {
+                                    ItemKey: "splitmail",
+                                    ItemDisplayName: "Mail",
+                                    ItemIconName: "Mail",
+                                    ItemParentKey: "newmail"
+                                },
+                                {
+                                    ItemKey: "splitevent",
+                                    ItemDisplayName: "Event",
+                                    ItemIconName: "Event",
+                                    ItemParentKey: "newmail"
+                                },
+                                {
+                                    ItemKey: "splitgroup",
+                                    ItemDisplayName: "Group",
+                                    ItemIconName: "Group",
+                                    ItemParentKey: "newmail"
+                                },
+                                {
+                                    ItemKey: "splitdocument",
+                                    ItemDisplayName: "Document",
+                                    ItemIconName: "WordLogo16",
+                                    ItemParentKey: "newmail"
+                                },
+                                {
+                                    ItemKey: "splitspreadsheet",
+                                    ItemDisplayName: "Spreadsheet",
+                                    ItemIconName: "ExcelLogo16",
+                                    ItemParentKey: "newmail"
+                                },
+                                {
+                                    ItemKey: "splitpresentation",
+                                    ItemDisplayName: "Presentation",
+                                    ItemIconName: "PowerPointLogo16",
+                                    ItemParentKey: "newmail"
+                                },
+                                {
+                                    ItemKey: "delete",
+                                    ItemDisplayName: "Delete",
+                                    ItemIconName: "Delete",
+                                    ItemIconOnly: true,
+                                    ItemEnabled: emailSelected,
+                                    ItemSplit: true
+                                },
+                                {
+                                    ItemKey: "splitdelete",
+                                    ItemDisplayName: "Delete",
+                                    ItemIconName: "Delete",
+                                    ItemIconOnly: true,
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "delete"
+                                },
+                                {
+                                    ItemKey: "splitignore",
+                                    ItemDisplayName: "Ignore",
+                                    ItemIconName: "MuteChat",
+                                    ItemIconOnly: true,
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "delete"
+                                },
+                                {
+                                    ItemKey: "archive",
+                                    ItemDisplayName: "Archive",
+                                    ItemIconName: "Archive",
+                                    ItemIconColor:If(emailSelected,"#528500",""),
+                                    ItemIconOnly: true,
+                                    ItemEnabled: emailSelected
+                                },
+                                {
+                                    ItemKey: "report",
+                                    ItemDisplayName: "Report",
+                                    ItemIconName: "ShieldAlert",
+                                    ItemIconColor:If(emailSelected,"#A13D3C",""),
+                                    ItemIconOnly: true,
+                                    ItemEnabled: emailSelected,
+                                    ItemSplit: true
+                                },
+                                {
+                                    ItemKey: "splitreportphishing",
+                                    ItemDisplayName: "Report Phishing",
+                                    ItemIconName: "ShieldAlert",
+                                    ItemIconOnly: true,
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "report"
+                                },
+                                {
+                                    ItemKey: "splitreportjunk",
+                                    ItemDisplayName: "Report Junk",
+                                    ItemIconName: "Blocked",
+                                    ItemIconOnly: true,
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "report"
+                                },
+                                {
+                                    ItemKey: "sweep",
+                                    ItemDisplayName: "Sweep",
+                                    ItemIconName: "Brush",
+                                    ItemIconOnly: true,
+                                    ItemEnabled: emailSelected
+                                },
+                                {
+                                    ItemKey: "moveto",
+                                    ItemDisplayName: "Move to",
+                                    ItemIconName: "PublicFolder",
+                                    ItemIconColor:If(emailSelected,"#4179D4",""),
+                                    ItemIconOnly: true,
+                                    ItemEnabled: emailSelected,
+                                    ItemSplit: true
+                                },
+                                {
+                                    ItemKey: "splitdeleteditems",
+                                    ItemDisplayName: "Deleted Items",
+                                    ItemIconName: "Delete",
+                                    ItemIconOnly: true,
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "moveto"
+                                },
+                                {
+                                    ItemKey: "splitarchive",
+                                    ItemDisplayName: "Archive",
+                                    ItemIconName: "Archive",
+                                    ItemIconOnly: true,
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "moveto"
+                                },
+                                {
+                                    ItemKey: "splitmovetodivider",
+                                    ItemDisplayName: "",
+                                    ItemIconName: "",
+                                    ItemEnabled: emailSelected,
+                                    ItemDivider: true,
+                                    ItemParentKey: "moveto"
+                                },
+                                {
+                                    ItemKey: "splitarchive",
+                                    ItemDisplayName: "Move to Other inbox",
+                                    ItemIconName: "",
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "moveto"
+                                },
+                                {
+                                    ItemKey: "splitarchive",
+                                    ItemDisplayName: "Always move to Other inbox",
+                                    ItemIconName: "",
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "moveto"
+                                },
+                                {
+                                    ItemKey: "splitarchive",
+                                    ItemDisplayName: "Move to a different folder...",
+                                    ItemIconName: "",
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "moveto"
+                                },
+                                {
+                                    ItemKey: "splitarchive",
+                                    ItemDisplayName: "Move all messages from...",
+                                    ItemIconName: "",
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "moveto"
+                                },
+                                {
+                                    ItemKey: "reply",
+                                    ItemDisplayName: "Reply",
+                                    ItemIconName: "Reply",
+                                    ItemIconColor:If(emailSelected,"#811899",""),
+                                    ItemIconOnly: true,
+                                    ItemEnabled: emailSelected
+                                },
+                                {
+                                    ItemKey: "replyall",
+                                    ItemDisplayName: "Reply all",
+                                    ItemIconName: "ReplyAll",
+                                    ItemIconColor:If(emailSelected,"#811899",""),
+                                    ItemIconOnly: true,
+                                    ItemEnabled: emailSelected
+                                },
+                                {
+                                    ItemKey: "forward",
+                                    ItemDisplayName: "Forward",
+                                    ItemIconName: "ReplyMirrored",
+                                    ItemIconColor:If(emailSelected,"#4179D4",""),
+                                    ItemIconOnly: true,
+                                    ItemEnabled: emailSelected,
+                                    ItemSplit: true
+                                },
+                                {
+                                    ItemKey: "splitforward",
+                                    ItemDisplayName: "Forward",
+                                    ItemIconName: "ReplyMirrored",
+                                    ItemIconOnly: true,
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "forward"
+                                },
+                                {
+                                    ItemKey: "splitforwardasattachment",
+                                    ItemDisplayName: "Forward as attachment",
+                                    ItemIconName: "MailAttached",
+                                    ItemIconOnly: true,
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "forward"
+                                },
+                                {
+                                    ItemKey: "quicksteps",
+                                    ItemDisplayName: "Quick steps",
+                                    ItemIconName: "LightningBolt",
+                                    ItemIconColor:If(emailSelected,"#BAA995",""),
+                                    ItemEnabled: true,
+                                    ItemSplit: true
+                                },
+                                {
+                                    ItemKey: "splitmanagequicksteps",
+                                    ItemDisplayName: "Manage quick steps",
+                                    ItemIconName: "Settings",
+                                    ItemEnabled: true,
+                                    ItemParentKey: "quicksteps"
+                                },
+                                {
+                                    ItemKey: "markallasread",
+                                    ItemDisplayName: If(emailSelected,"Read / Unread","Mark all as read"),
+                                    ItemIconName: "Read",
+                                    ItemEnabled: true
+                                },
+                                {
+                                    ItemKey: "categorize",
+                                    ItemDisplayName: "Categorize",
+                                    ItemIconName: "Tag",
+                                    ItemIconOnly: true,
+                                    ItemEnabled: emailSelected,
+                                    ItemSplit: true
+                                },
+                                {
+                                    ItemKey: "splitbluecategory",
+                                    ItemDisplayName: "Blue category",
+                                    ItemIconName: "Tag",
+                                    ItemIconColor: "rgb(32, 144, 255)",
+                                    ItemIconOnly: false,
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "categorize"
+                                },
+                                {
+                                    ItemKey: "splitgreencategory",
+                                    ItemDisplayName: "Green category",
+                                    ItemIconName: "Tag",
+                                    ItemIconColor: "rgb(0, 128, 0)",
+                                    ItemIconOnly: false,
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "categorize"
+                                },
+                                {
+                                    ItemKey: "splitorangecategory",
+                                    ItemDisplayName: "Orange category",
+                                    ItemIconName: "Tag",
+                                    ItemIconColor: "rgb(255, 140, 0)",
+                                    ItemIconOnly: false,
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "categorize"
+                                },
+                                {
+                                    ItemKey: "splitpurplecategory",
+                                    ItemDisplayName: "Purple category",
+                                    ItemIconName: "Tag",
+                                    ItemIconColor: "rgb(128, 0, 128)",
+                                    ItemIconOnly: false,
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "categorize"
+                                },
+                                {
+                                    ItemKey: "splitredcategory",
+                                    ItemDisplayName: "Red category",
+                                    ItemIconName: "Tag",
+                                    ItemIconColor: "rgb(232, 17, 35)",
+                                    ItemIconOnly: false,
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "categorize"
+                                },
+                                {
+                                    ItemKey: "splityellowcategory",
+                                    ItemDisplayName: "Yellow category",
+                                    ItemIconName: "Tag",
+                                    ItemIconColor: "rgb(251,236,93)",
+                                    ItemIconOnly: false,
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "categorize"
+                                },
+                                {
+                                    ItemKey: "flagunflag",
+                                    ItemDisplayName: "Flag / Unflag",
+                                    ItemIconName: "Flag",
+                                    ItemIconColor:If(emailSelected,"#97252F",""),
+                                    ItemIconOnly: true,
+                                    ItemEnabled: emailSelected,
+                                    ItemSplit: true
+                                },
+                                {
+                                    ItemKey: "splittoday",
+                                    ItemDisplayName: "Today",
+                                    ItemIconName: "",
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "flagunflag"
+                                },
+                                {
+                                    ItemKey: "splittomorrow",
+                                    ItemDisplayName: "Tomorrow",
+                                    ItemIconName: "",
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "flagunflag"
+                                },
+                                {
+                                    ItemKey: "splitthisweek",
+                                    ItemDisplayName: "This week",
+                                    ItemIconName: "",
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "flagunflag"
+                                },
+                                {
+                                    ItemKey: "splitnextweek",
+                                    ItemDisplayName: "Next week",
+                                    ItemIconName: "",
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "flagunflag"
+                                },
+                                {
+                                    ItemKey: "splitnodate",
+                                    ItemDisplayName: "No date",
+                                    ItemIconName: "",
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "flagunflag"
+                                },
+                                {
+                                    ItemKey: "splitflagdivider",
+                                    ItemDisplayName: "",
+                                    ItemIconName: "",
+                                    ItemEnabled: emailSelected,
+                                    ItemDivider: true,
+                                    ItemParentKey: "flagunflag"
+                                },
+                                {
+                                    ItemKey: "splitarchive",
+                                    ItemDisplayName: "Mark complete",
+                                    ItemIconName: "",
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "flagunflag"
+                                },
+                                {
+                                    ItemKey: "splitarchive",
+                                    ItemDisplayName: "Clear flag",
+                                    ItemIconName: "",
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "flagunflag"
+                                },
+                                {
+                                    ItemKey: "pinunpin",
+                                    ItemDisplayName: "Pin / Unpin",
+                                    ItemIconName: "Pinned",
+                                    ItemIconColor:If(emailSelected,"#847DD8",""),
+                                    ItemIconOnly: true,
+                                    ItemEnabled: emailSelected
+                                },
+                                {
+                                    ItemKey: "snooze",
+                                    ItemDisplayName: "Snooze",
+                                    ItemIconName: "Clock",
+                                    ItemIconOnly: true,
+                                    ItemEnabled: emailSelected,
+                                    ItemSplit: true
+                                },
+                                {
+                                    ItemKey: "splitlatertoday",
+                                    ItemDisplayName: "Later today",
+                                    ItemIconName: "",
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "snooze"
+                                },
+                                {
+                                    ItemKey: "splittomorrow",
+                                    ItemDisplayName: "Tomorrow",
+                                    ItemIconName: "",
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "snooze"
+                                },
+                                {
+                                    ItemKey: "splitthisweekend",
+                                    ItemDisplayName: "This weekend",
+                                    ItemIconName: "",
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "snooze"
+                                },
+                                {
+                                    ItemKey: "splitnextweek",
+                                    ItemDisplayName: "Next week",
+                                    ItemIconName: "",
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "snooze"
+                                },
+                                {
+                                    ItemKey: "splitsnoozedivider",
+                                    ItemDisplayName: "",
+                                    ItemIconName: "",
+                                    ItemEnabled: emailSelected,
+                                    ItemDivider: true,
+                                    ItemParentKey: "snooze"
+                                },
+                                {
+                                    ItemKey: "splitchooseadate",
+                                    ItemDisplayName: "Choose a date",
+                                    ItemIconName: "",
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "snooze"
+                                },
+                                {
+                                    ItemKey: "assignpolicy",
+                                    ItemDisplayName: "Assign policy",
+                                    ItemIconName: "Archive",
+                                    ItemIconColor:If(emailSelected,"#4179D4",""),
+                                    ItemIconOnly: true,
+                                    ItemEnabled: emailSelected,
+                                    ItemSplit: true
+                                },
+                                {
+                                    ItemKey: "splitretentionlabels",
+                                    ItemDisplayName: "Retention labels",
+                                    ItemHeader: true,
+                                    ItemIconName: "",
+                                    ItemIconOnly: false,
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "assignpolicy"
+                                },
+                                {
+                                    ItemKey: "splitoneweekdelete",
+                                    ItemDisplayName: "1 Week Delete",
+                                    ItemIconName: "",
+                                    ItemIconOnly: false,
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "assignpolicy"
+                                },
+                                {
+                                    ItemKey: "splitonemonthdelete",
+                                    ItemDisplayName: "1 Month Delete",
+                                    ItemIconName: "",
+                                    ItemIconOnly: false,
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "assignpolicy"
+                                },
+                                {
+                                    ItemKey: "splitsixmonthdelete",
+                                    ItemDisplayName: "6 Month Delete",
+                                    ItemIconName: "",
+                                    ItemIconOnly: false,
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "assignpolicy"
+                                },
+                                {
+                                    ItemKey: "splitoneyeardelete",
+                                    ItemDisplayName: "1 Year Delete",
+                                    ItemIconName: "",
+                                    ItemIconOnly: false,
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "assignpolicy"
+                                },
+                                {
+                                    ItemKey: "splitfiveyeardelete",
+                                    ItemDisplayName: "5 Year Delete",
+                                    ItemIconName: "",
+                                    ItemIconOnly: false,
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "assignpolicy"
+                                },
+                                {
+                                    ItemKey: "splitneverdelete",
+                                    ItemDisplayName: "Never Delete",
+                                    ItemIconName: "",
+                                    ItemIconOnly: false,
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "assignpolicy"
+                                },
+                                {
+                                    ItemKey: "splituseparentfolderpolicy",
+                                    ItemDisplayName: "Use parent folder policy",
+                                    ItemIconName: "CheckMark",
+                                    ItemIconOnly: false,
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "assignpolicy"
+                                },
+                                {
+                                    ItemKey: "splitassignpolicydivider",
+                                    ItemDisplayName: "",
+                                    ItemIconName: "",
+                                    ItemIconOnly: false,
+                                    ItemEnabled: emailSelected,
+                                    ItemDivider: true,
+                                    ItemParentKey: "assignpolicy"
+                                },
+                                {
+                                    ItemKey: "splitmoreretentionpolicies",
+                                    ItemDisplayName: "More retention policies",
+                                    ItemIconName: "",
+                                    ItemIconOnly: false,
+                                    ItemEnabled: emailSelected,
+                                    ItemParentKey: "assignpolicy"
+                                },
+                                {
+                                    ItemKey: "undo",
+                                    ItemDisplayName: "Undo",
+                                    ItemIconName: "Undo",
+                                    ItemIconOnly: true,
+                                    ItemEnabled: false //emailSelected
+                                },
+                                {
+                                    ItemKey: "getaddins",
+                                    ItemDisplayName: "Get add-ins",
+                                    ItemIconName: "AddIn",
+                                    ItemIconColor:"#BB4F19",
+                                    ItemIconOnly: true,
+                                    ItemEnabled: true
+                                },
+                                {
+                                    ItemKey: "headermoveanddelete",
+                                    ItemDisplayName: "Move & delete",
+                                    ItemHeader: true,
+                                    ItemIconName: "",
+                                    ItemIconOnly: false,
+                                    ItemEnabled: true,
+                                    ItemOverflow: true
+                                },
+                                {
+                                    ItemKey: "block",
+                                    ItemDisplayName: "Block",
+                                    ItemIconName: "BlockContact",
+                                    ItemIconOnly: true,
+                                    ItemEnabled: emailSelected,
+                                    ItemOverflow: true,
+                                    ItemSplit: true
+                                },
+                                {
+                                    ItemKey: "block",
+                                    ItemDisplayName: "Block sender",
+                                    ItemIconName: "BlockContact",
+                                    ItemIconOnly: false,
+                                    ItemEnabled: emailSelected,
+                                    ItemOverflow: true,
+                                    ItemParentKey: "block"
+                                },
+                                {
+                                    ItemKey: "block",
+                                    ItemDisplayName: "Never block sender",
+                                    ItemIconName: "ContactHeart",
+                                    ItemIconOnly: false,
+                                    ItemEnabled: emailSelected,
+                                    ItemOverflow: true,
+                                    ItemParentKey: "block"
+                                },
+                                {
+                                    ItemKey: "rules",
+                                    ItemDisplayName: "Rules",
+                                    ItemIconName: "CreateMailRule",
+                                    ItemIconOnly: true,
+                                    ItemEnabled: true,
+                                    ItemOverflow: true,
+                                    ItemSplit: true
+                                },
+                                {
+                                    ItemKey: "splitcreaterule",
+                                    ItemDisplayName: "Create rule",
+                                    ItemIconName: "CreateMailRule",
+                                    ItemIconOnly: false,
+                                    ItemEnabled: emailSelected,
+                                    ItemOverflow: true,
+                                    ItemParentKey: "rules"
+                                },
+                                {
+                                    ItemKey: "splitmanagerules",
+                                    ItemDisplayName: "Manage rules",
+                                    ItemIconName: "Settings",
+                                    ItemIconOnly: false,
+                                    ItemEnabled: true,
+                                    ItemOverflow: true,
+                                    ItemParentKey: "rules"
+                                },
+                                {
+                                    ItemKey: "headerrespond",
+                                    ItemDisplayName: "Respond",
+                                    ItemHeader: true,
+                                    ItemIconName: "",
+                                    ItemIconOnly: false,
+                                    ItemEnabled: true,
+                                    ItemOverflow: true
+                                },
+                                {
+                                    ItemKey: "meeting",
+                                    ItemDisplayName: "Meeting",
+                                    ItemIconName: "CalendarReply",
+                                    ItemIconOnly: true,
+                                    ItemEnabled: emailSelected,
+                                    ItemOverflow: true
+                                },
+                                {
+                                    ItemKey: "headerfind",
+                                    ItemDisplayName: "Find",
+                                    ItemHeader: true,
+                                    ItemIconName: "",
+                                    ItemIconOnly: false,
+                                    ItemEnabled: true,
+                                    ItemOverflow: true
+                                },
+                                {
+                                    ItemKey: "discovergroups",
+                                    ItemDisplayName: "Discover groups",
+                                    ItemIconName: "Group",
+                                    ItemIconOnly: true,
+                                    ItemEnabled: true,
+                                    ItemOverflow: true
+                                },
+                                {
+                                    ItemKey: "customizedivider",
+                                    ItemDisplayName: "",
+                                    ItemIconName: "",
+                                    ItemIconOnly: false,
+                                    ItemEnabled: true,
+                                    ItemDivider: true,
+                                    ItemOverflow: true
+                                },
+                                {
+                                    ItemKey: "customize",
+                                    ItemDisplayName: "Customize",
+                                    ItemIconName: "",
+                                    ItemIconOnly: false,
+                                    ItemEnabled: true,
+                                    ItemOverflow: true
+                                }
+                            )
+                        OnSelect: |-
+                            =Switch( Self.Selected.ItemKey,
+                                /* Action for ItemKey 'new' (e.g., Patch function) */
+                                "toggle", Set(varToggleLeftPane, !varToggleLeftPane),
+                            
+                                /* Action for ItemKey 'new' (e.g., Patch function) */
+                                "new", false,
+                                
+                                /* Action for 'edit' (e.g., Patch function) */
+                                "edit", false,
+                                
+                                /* Action for 'delete' (e.g., Remove function ) */
+                                "delete", false,
+                                
+                                /* Action for 'refresh' (e.g., Refresh function) */
+                                "refresh", false,
+                                
+                                /* Action for 'help' (e.g., email support with the Office 365 connector ) */
+                                "help", false,
+                              
+                                /* Default action */
+                                    false
+                              )
+                        Width: =Parent.Width
+                        X: =15
+                        Y: =5
+                        ZIndex: =3
+
+                conMailbox As groupContainer.horizontalAutoLayoutContainer:
+                    AlignInContainer: =AlignInContainer.SetByContainer
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =250
+                    LayoutMode: =LayoutMode.Auto
+                    Width: =Parent.Width
+                    ZIndex: =3
+
+                    "ccNavigationPanelNav As 'Fluent Nav (1.0.14)'.pcfdataset":
+                        CollapseByDefault: =false
+                        DisplayMode: =DisplayMode.Edit
+                        Height: =Parent.Height
+                        Items: |-
+                            =Table(
+                                        {ItemKey:"favorites",ItemDisplayName:"Favorites",ItemExpanded:true},
+                                        {ItemKey:"favinbox",ItemDisplayName:"Inbox",ItemParentKey:"favorites",ItemIconName:"Mail"},
+                                        {ItemKey:"favsentitems",ItemDisplayName:"Sent Items",ItemParentKey:"favorites",ItemIconName:"Send"},
+                                        {ItemKey:"favdrafts",ItemDisplayName:"Drafts",ItemParentKey:"favorites",ItemIconName:"Edit"},
+                                        {ItemKey:"favdeleteditems",ItemDisplayName:"Deleted Items",ItemParentKey:"favorites",ItemIconName:"Delete"},
+                                        {ItemKey:"folders",ItemDisplayName:"Folders",ItemExpanded:false},
+                                        {ItemKey:"folinbox",ItemDisplayName:"Inbox",ItemParentKey:"folders",ItemIconName:"Mail"},
+                                        {ItemKey:"folsentitems",ItemDisplayName:"Sent Items",ItemParentKey:"folders",ItemIconName:"Send"},
+                                        {ItemKey:"foldrafts",ItemDisplayName:"Drafts",ItemParentKey:"folders",ItemIconName:"Edit"},
+                                        {ItemKey:"foldeleteditems",ItemDisplayName:"Deleted Items",ItemParentKey:"folders",ItemIconName:"Delete"},
+                                        {ItemKey:"foljunkemail",ItemDisplayName:"Junk Email",ItemParentKey:"folders",ItemIconName:"FabricFolder"},
+                                        {ItemKey:"archive",ItemDisplayName:"Archive",ItemParentKey:"folders",ItemIconName:"Archive"},
+                                        {ItemKey:"notes",ItemDisplayName:"Notes",ItemParentKey:"folders",ItemIconName:"QuickNote"},
+                                        {ItemKey:"groups",ItemDisplayName:"Groups",ItemExpanded:false},
+                                        {ItemKey:"mygroup",ItemDisplayName:"My Group",ItemParentKey:"groups",ItemIconName:"People"}
+                            )
+                        LayoutMinHeight: =200
+                        LayoutMinWidth: =200
+                        Visible: =If(App.Width>918,true)
+                        Width: =215
+                        X: =0
+                        Y: =0
+                        ZIndex: =1
+
+                    conMessageListPane As groupContainer.verticalAutoLayoutContainer:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        FillPortions: =0
+                        Height: =Parent.Height
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMinHeight: =100
+                        LayoutMinWidth: =250
+                        LayoutMode: =LayoutMode.Auto
+                        Visible: =If(App.Width>768,true)
+                        Width: =355
+                        Y: =50
+                        ZIndex: =2
+
+                        recSpacer As rectangle:
+                            BorderColor: =RGBA(0, 0, 0, 0)
+                            BorderStyle: =BorderStyle.None
+                            BorderThickness: =2
+                            DisabledFill: =RGBA(166, 166, 166, 1)
+                            Fill: =RGBA(0, 0, 0, 0)
+                            FocusedBorderThickness: =4
+                            Height: =8
+                            HoverFill: =RGBA(0, 120, 212, 1)
+                            PressedFill: =RGBA(0, 120, 212, 1)
+                            Width: =Parent.Width
+                            ZIndex: =1
+
+                        conMessageList As groupContainer.manualLayoutContainer:
+                            AlignInContainer: =AlignInContainer.SetByContainer
+                            FillPortions: =0
+                            Height: =Parent.Height//-recSpacer.Height-pivEmailListHeader.Height
+                            LayoutMinHeight: =100
+                            LayoutMinWidth: =250
+                            Width: =Parent.Width
+                            ZIndex: =4
+
+                            "galMessageList As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver4.0'":
+                                BorderColor: =RGBA(166, 166, 166, 1)
+                                Height: =Parent.Height-ccMessageListHeaderPivot.Height
+                                Items: =colEmailInbox
+                                Layout: =Layout.Vertical
+                                TemplateFill: =White
+                                TemplateSize: =110
+                                Visible: =false
+                                Width: =Parent.Width
+                                ZIndex: =1
+
+                                Subtitle1 As label:
+                                    Color: =RGBA(51, 51, 51, 1)
+                                    DisabledColor: =RGBA(166, 166, 166, 1)
+                                    Font: =Font.'Segoe UI'
+                                    Height: =25
+                                    OnSelect: =Select(Parent)
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =12
+                                    Text: =ThisItem.Subject
+                                    VerticalAlign: =VerticalAlign.Top
+                                    Width: =Parent.Width-Subtitle1_2.Width-70-20
+                                    X: =Title1.X
+                                    Y: =Title1.Y + Title1.Height + 4
+                                    ZIndex: =2
+
+                                Separator1 As rectangle:
+                                    BorderColor: =RGBA(0, 0, 0, 0)
+                                    Fill: =ColorFade(RGBA(0, 120, 212, 1), -30%)
+                                    Height: =1
+                                    OnSelect: =Select(Parent)
+                                    Width: =Parent.TemplateWidth
+                                    Y: =Parent.TemplateHeight - 1
+                                    ZIndex: =4
+
+                                Title1 As label:
+                                    Color: =RGBA(0, 0, 0, 1)
+                                    DisabledColor: =RGBA(166, 166, 166, 1)
+                                    Font: =Font.'Segoe UI'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =29
+                                    OnSelect: =Select(Parent)
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =12
+                                    Text: =ThisItem.From
+                                    VerticalAlign: =VerticalAlign.Top
+                                    Width: =Parent.Width-70
+                                    X: =60
+                                    Y: =14
+                                    ZIndex: =5
+
+                                Subtitle1_1 As label:
+                                    Color: =RGBA(51, 51, 51, 1)
+                                    DisabledColor: =RGBA(166, 166, 166, 1)
+                                    Font: =Font.'Segoe UI'
+                                    Height: =24
+                                    OnSelect: =Select(Parent)
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =12
+                                    Text: =ThisItem.BodyPreview
+                                    VerticalAlign: =VerticalAlign.Top
+                                    Width: =Parent.Width-70
+                                    X: =Title1.X
+                                    Y: =79
+                                    ZIndex: =6
+
+                                Subtitle1_2 As label:
+                                    Color: =RGBA(51, 51, 51, 1)
+                                    DisabledColor: =RGBA(166, 166, 166, 1)
+                                    Font: =Font.'Segoe UI'
+                                    Height: =19
+                                    OnSelect: =Select(Parent)
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =10
+                                    Text: =TimeValue(ThisItem.DateTimeReceived)
+                                    VerticalAlign: =VerticalAlign.Top
+                                    Width: =80
+                                    X: =Parent.Width-Self.Width-10
+                                    Y: =53
+                                    ZIndex: =7
+
+                            "ccMessageFluentDetailsList As 'Fluent Details List (1.0.14)'.pcfdataset":
+                                columns_Items: |-
+                                    =Table(
+                                        {
+                                            ColName: "From",
+                                            ColDisplayName: "From",
+                                            ColIsBold: true,
+                                            ColRowHeader: true,
+                                            ColHideWhenBlank: true,
+                                            ColPaddingTop: 0,
+                                            ColVerticalAlign: "center",
+                                            ColHorizontalAlign: "left",
+                                            ColMultiLine: false,
+                                            ColResponsive: true,
+                                            ColSortable: true,
+                                            ColResizable: true,
+                                            ColWidth: Parent.Width-65
+                                        },
+                                        {
+                                            ColName: "Subject",
+                                            ColIsBold: false,
+                                            ColHideWhenBlank: true,
+                                            ColPaddingTop: 5,
+                                            ColMultiLine: false,
+                                            ColShowAsSubTextOf: "From",
+                                            ColSubTextRow: 2
+                                        },
+                                        {
+                                            ColName: "DateTimeReceived",
+                                            ColInlineLabel: "Received:",
+                                            ColIsBold: false,
+                                            ColHideWhenBlank: true,
+                                            ColPaddingTop: 5,
+                                            ColMultiLine: false,
+                                            ColShowAsSubTextOf: "From",
+                                            ColSubTextRow: 3
+                                        },
+                                        {
+                                            ColName: "BodyPreview",
+                                            ColIsBold: false,
+                                            ColHideWhenBlank: true,
+                                            ColPaddingTop: 5,
+                                            ColMultiLine: false,
+                                            ColShowAsSubTextOf: "From",
+                                            ColSubTextRow: 4
+                                        }
+                                    )
+                                Compact: =false
+                                DisplayMode: =DisplayMode.Edit
+                                HeaderVisible: =true
+                                Height: =Parent.Height+10
+                                Items: =colEmailInbox
+                                SelectionAlwaysVisible: =false
+                                SelectionType: ='''PowerCAT.FluentDetailsList.SelectionType'''.Multiple
+                                Visible: =true
+                                Width: =Parent.Width
+                                X: =0
+                                Y: =0
+                                ZIndex: =2
+
+                                From1 As pcfDataField.textualColumn:
+                                    FieldDisplayName: ="From"
+                                    FieldName: ="From"
+                                    FieldType: ="s"
+                                    FieldVariantName: ="textualColumn"
+                                    Order: =1
+                                    ZIndex: =9
+
+                                Subject1 As pcfDataField.textualColumn:
+                                    FieldDisplayName: ="Subject"
+                                    FieldName: ="Subject"
+                                    FieldType: ="s"
+                                    FieldVariantName: ="textualColumn"
+                                    Order: =2
+                                    ZIndex: =10
+
+                                BodyPreview1 As pcfDataField.textualColumn:
+                                    FieldDisplayName: ="BodyPreview"
+                                    FieldName: ="BodyPreview"
+                                    FieldType: ="s"
+                                    FieldVariantName: ="textualColumn"
+                                    Order: =3
+                                    ZIndex: =11
+
+                                DateTimeReceived1 As pcfDataField.textualColumn:
+                                    FieldDisplayName: ="DateTimeReceived"
+                                    FieldName: ="DateTimeReceived"
+                                    FieldType: ="d"
+                                    FieldVariantName: ="textualColumn"
+                                    Order: =4
+                                    ZIndex: =12
+
+                            recMessageListHeader As rectangle:
+                                BorderColor: =RGBA(0, 0, 0, 0)
+                                BorderStyle: =BorderStyle.None
+                                BorderThickness: =2
+                                DisabledFill: =RGBA(166, 166, 166, 1)
+                                Fill: =RGBA(255, 255, 255, 1)
+                                FocusedBorderThickness: =4
+                                Height: =40
+                                HoverFill: =RGBA(0, 120, 212, 1)
+                                PressedFill: =RGBA(0, 120, 212, 1)
+                                Width: =Parent.Width-50
+                                X: =50
+                                ZIndex: =3
+
+                            "ccMessageListHeaderPivot As 'Fluent Pivot (1.0.14)'.pcfdataset":
+                                DisplayMode: =DisplayMode.Edit
+                                Height: =recMessageListHeader.Height
+                                Items: |-
+                                    =Table(
+                                      {
+                                          ItemKey: "tabFocused",
+                                          ItemDisplayName: "Focused"
+                                      },
+                                      {
+                                          ItemKey: "tabOther",
+                                          ItemDisplayName: "Other"
+                                      }
+                                    )
+                                RenderSize: ='''PowerCAT.Pivot.RenderSize'''.Normal
+                                Visible: =true
+                                Width: =recMessageListHeader.Width
+                                X: =recMessageListHeader.X
+                                Y: =0
+                                ZIndex: =4
+
+                    conReadingPane As groupContainer.manualLayoutContainer:
+                        FillPortions: =0
+                        LayoutMinHeight: =100
+                        LayoutMinWidth: =250
+                        Width: =Parent.Width-If(ccNavigationPanelNav.Visible=true,ccNavigationPanelNav.Width)-If(conMessageListPane.Visible=true,conMessageListPane.Width)
+                        ZIndex: =3
+
+                        conMultipleEmail As groupContainer.manualLayoutContainer:
+                            Height: =Parent.Height
+                            Visible: =If(selectedEmailCount>1,true,false)
+                            Width: =Parent.Width
+                            ZIndex: =1
+
+                            imgMultipleEmail As image:
+                                BorderColor: =RGBA(0, 0, 0, 0)
+                                BorderStyle: =BorderStyle.None
+                                BorderThickness: =2
+                                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                                DisabledFill: =RGBA(0, 0, 0, 0)
+                                FocusedBorderThickness: =4
+                                Height: =120
+                                HoverBorderColor: =RGBA(0, 0, 0, 0)
+                                HoverFill: =RGBA(0, 0, 0, 0)
+                                Image: ='illustration_mail_select-hash-84fc12b0'
+                                PressedBorderColor: =RGBA(0, 0, 0, 0)
+                                PressedFill: =RGBA(0, 0, 0, 0)
+                                Width: =120
+                                X: =Parent.Width/2-Self.Width/2
+                                Y: =Parent.Height/2-Self.Height
+                                ZIndex: =1
+
+                            lblMultipleEmailTitle As label:
+                                Align: =Align.Center
+                                BorderColor: =RGBA(0, 0, 0, 0)
+                                BorderStyle: =BorderStyle.None
+                                BorderThickness: =2
+                                Color: =RGBA(51, 51, 51, 1)
+                                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                                DisabledColor: =RGBA(166, 166, 166, 1)
+                                FocusedBorderThickness: =4
+                                Font: =Font.'Segoe UI'
+                                FontWeight: =FontWeight.Semibold
+                                Size: =12
+                                Text: =$"{selectedEmailCount} conversations selected"
+                                Width: =192
+                                X: =Parent.Width/2-Self.Width/2
+                                Y: =imgMultipleEmail.Y+imgMultipleEmail.Height
+                                ZIndex: =2
+
+                            lblMultipleEmailSubtitle As label:
+                                Align: =Align.Center
+                                BorderColor: =RGBA(0, 0, 0, 0)
+                                BorderStyle: =BorderStyle.None
+                                BorderThickness: =2
+                                Color: =RGBA(51, 51, 51, 1)
+                                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                                DisabledColor: =RGBA(166, 166, 166, 1)
+                                FocusedBorderThickness: =4
+                                Font: =Font.'Segoe UI'
+                                Height: =30
+                                Size: =12
+                                Text: ="Select everything in your Inbox folder"
+                                Width: =280
+                                X: =Parent.Width/2-Self.Width/2
+                                Y: =lblMultipleEmailTitle.Y+lblMultipleEmailTitle.Height
+                                ZIndex: =3
+
+                        conNoEmail As groupContainer.manualLayoutContainer:
+                            Height: =Parent.Height
+                            Visible: =If(selectedEmailCount=0,true,false)
+                            Width: =Parent.Width
+                            ZIndex: =2
+
+                            imgNoEmail As image:
+                                BorderColor: =RGBA(0, 0, 0, 0)
+                                BorderStyle: =BorderStyle.None
+                                BorderThickness: =2
+                                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                                DisabledFill: =RGBA(0, 0, 0, 0)
+                                FocusedBorderThickness: =4
+                                Height: =120
+                                HoverBorderColor: =RGBA(0, 0, 0, 0)
+                                HoverFill: =RGBA(0, 0, 0, 0)
+                                Image: ='illustration_mail-hash-c4bc6831'
+                                PressedBorderColor: =RGBA(0, 0, 0, 0)
+                                PressedFill: =RGBA(0, 0, 0, 0)
+                                Width: =120
+                                X: =Parent.Width/2-Self.Width/2
+                                Y: =Parent.Height/2-Self.Height
+                                ZIndex: =1
+
+                            lblNoEmailTitle As label:
+                                Align: =Align.Center
+                                BorderColor: =RGBA(0, 0, 0, 0)
+                                BorderStyle: =BorderStyle.None
+                                BorderThickness: =2
+                                Color: =RGBA(51, 51, 51, 1)
+                                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                                DisabledColor: =RGBA(166, 166, 166, 1)
+                                FocusedBorderThickness: =4
+                                Font: =Font.'Segoe UI'
+                                FontWeight: =FontWeight.Semibold
+                                Size: =12
+                                Text: ="Select an item to read"
+                                Width: =192
+                                X: =Parent.Width/2-Self.Width/2
+                                Y: =imgNoEmail.Y+imgNoEmail.Height
+                                ZIndex: =2
+
+                            lblNoEmailSubtitle As label:
+                                Align: =Align.Center
+                                BorderColor: =RGBA(0, 0, 0, 0)
+                                BorderStyle: =BorderStyle.None
+                                BorderThickness: =2
+                                Color: =RGBA(51, 51, 51, 1)
+                                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                                DisabledColor: =RGBA(166, 166, 166, 1)
+                                FocusedBorderThickness: =4
+                                Font: =Font.'Segoe UI'
+                                Height: =30
+                                Size: =12
+                                Text: ="Nothing is selected"
+                                Width: =192
+                                X: =Parent.Width/2-Self.Width/2
+                                Y: =lblNoEmailTitle.Y+lblNoEmailTitle.Height
+                                ZIndex: =3
+
+                        conEmail As groupContainer.manualLayoutContainer:
+                            Height: =Parent.Height
+                            Visible: =If(selectedEmailCount=1,true,false)
+                            Width: =Parent.Width
+                            ZIndex: =3
+
+                            conEmailHeader As groupContainer.manualLayoutContainer:
+                                Height: =60
+                                Width: =Parent.Width
+                                ZIndex: =1
+
+                                lblEmailHeader As label:
+                                    BorderColor: =RGBA(237, 237, 237, 1)
+                                    BorderThickness: =1
+                                    Color: =RGBA(51, 51, 51, 1)
+                                    DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                                    DisabledColor: =RGBA(166, 166, 166, 1)
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    FocusedBorderThickness: =4
+                                    Font: =Font.'Segoe UI'
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =Parent.Height-16
+                                    PaddingLeft: =15
+                                    Size: =13
+                                    Text: =ccMessageFluentDetailsList.Selected.Subject
+                                    Width: =Parent.Width-20
+                                    X: =10
+                                    Y: =8
+                                    ZIndex: =2
+
+                            conEmailItem As groupContainer.manualLayoutContainer:
+                                BorderColor: =RGBA(202, 202, 202, 1)
+                                BorderThickness: =1
+                                Height: =Parent.Height-conEmailHeader.Height
+                                Width: =Parent.Width-20
+                                X: =10
+                                Y: =conEmailHeader.Height
+                                ZIndex: =2
+
+                                htmlBody As htmlViewer:
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =Parent.Height
+                                    HtmlText: =ccMessageFluentDetailsList.Selected.Body
+                                    Width: =Parent.Width
+                                    Y: =conEmailDetails.Height
+                                    ZIndex: =1
+
+                                conEmailDetails As groupContainer.manualLayoutContainer:
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                    Height: =0
+                                    Visible: =false
+                                    Width: =Parent.Width
+                                    ZIndex: =2
+
+    conLoading As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =Parent.Height
+        Visible: =!varPageLoaded
+        Width: =Parent.Width
+        ZIndex: =2
+
+        imgAnimationLoading As image:
+            BorderColor: =RGBA(0, 0, 0, 0)
+            BorderStyle: =BorderStyle.None
+            BorderThickness: =2
+            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+            DisabledFill: =RGBA(0, 0, 0, 0)
+            FocusedBorderThickness: =4
+            Height: =200
+            HoverBorderColor: =RGBA(0, 0, 0, 0)
+            HoverFill: =RGBA(0, 0, 0, 0)
+            Image: =LoadingScreenAnimation
+            PressedBorderColor: =RGBA(0, 0, 0, 0)
+            PressedFill: =RGBA(0, 0, 0, 0)
+            Width: =200
+            X: =Parent.Width/2-Self.Width/2
+            Y: =Parent.Height/2-Self.Height/2
+            ZIndex: =1
+
+        imgLogoMicrosoft As image:
+            BorderColor: =RGBA(0, 0, 0, 0)
+            BorderStyle: =BorderStyle.None
+            BorderThickness: =2
+            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+            DisabledFill: =RGBA(0, 0, 0, 0)
+            FocusedBorderThickness: =4
+            HoverBorderColor: =RGBA(0, 0, 0, 0)
+            HoverFill: =RGBA(0, 0, 0, 0)
+            Image: =MicrosoftLogo
+            PressedBorderColor: =RGBA(0, 0, 0, 0)
+            PressedFill: =RGBA(0, 0, 0, 0)
+            X: =Parent.Width/2-Self.Width/2
+            Y: =Parent.Height-Self.Height
+            ZIndex: =2
+
