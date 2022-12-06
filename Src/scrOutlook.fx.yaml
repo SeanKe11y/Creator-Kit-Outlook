@@ -143,7 +143,7 @@ scrOutlook As screen:
                 "ccIconMoreApps As 'Fluent Icon (1.0.14)'":
                     DisplayMode: =DisplayMode.Edit
                     Height: =50
-                    IconName: ="More"
+                    IconName: ="StoreLogo16"
                     TextAlignment: ='''PowerCAT.Icon.TextAlignment'''.Center
                     Width: =50
                     X: =0
